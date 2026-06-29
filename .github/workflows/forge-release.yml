@@ -50,8 +50,8 @@ jobs:
 
       - name: Build Forge
         env:
-          GPR_USER: ${{ secrets.GPR_USER }}
-          GPR_KEY: ${{ secrets.GPR_KEY }}
+          GPR_USER: ${{ secrets.PKG_USER }}
+          GPR_KEY: ${{ secrets.PKG_PASSWORD }}
         run: ./gradlew -DforgeOnly=true :forge:build --no-daemon --stacktrace
 
       - name: Collect release assets
