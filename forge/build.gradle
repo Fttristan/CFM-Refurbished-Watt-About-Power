@@ -37,7 +37,12 @@ dependencies {
     modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
 
     modImplementation "com.mrcrayfish:framework-forge:${minecraft_version}-${framework_version}"
-    modImplementation "com.mrcrayfish:refurbished_furniture-forge:${minecraft_version}-${refurbished_furniture}"
+    def localRefurbishedFurnitureJar = file("$projectDir/libs/refurbished_furniture-forge-1.20.1-1.0.20.jar")
+    if(localRefurbishedFurnitureJar.exists()) {
+        modImplementation files(localRefurbishedFurnitureJar)
+    } else {
+        modImplementation "com.mrcrayfish:refurbished_furniture-forge:${minecraft_version}-${refurbished_furniture}"
+    }
 
     modRuntimeOnly "curse.maven:mekanism-268560:6552911"
     modRuntimeOnly "curse.maven:mekanism-generators-268566:6552914"

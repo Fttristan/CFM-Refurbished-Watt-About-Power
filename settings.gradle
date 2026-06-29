@@ -10,5 +10,8 @@ pluginManagement {
 rootProject.name = 'cfm_wap'
 
 include 'common'
-include 'fabric'
 include 'forge'
+
+if(!Boolean.getBoolean('forgeOnly')) {
+    include 'fabric'
+}
