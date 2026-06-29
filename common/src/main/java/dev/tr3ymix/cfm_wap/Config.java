@@ -7,6 +7,8 @@ import com.mrcrayfish.framework.api.config.IntProperty;
 
 public class Config {
 
+    public static final int CIRCUIT_BREAKER_NETWORK_NODE_FLOOR = 5000;
+
     @FrameworkConfig(id = CFM_WAP.MOD_ID, name = "server", type = ConfigType.SERVER_SYNC)
     public static final Server SERVER = new Server();
 

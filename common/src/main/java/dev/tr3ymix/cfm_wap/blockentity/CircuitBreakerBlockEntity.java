@@ -118,9 +118,13 @@ public class CircuitBreakerBlockEntity extends ElectricitySourceLootBlockEntity 
 
     @Override
     public NodeSearchResult searchNodeNetwork(boolean cancelAtLimit) {
+        int networkNodeLimit = Math.max(
+            Config.SERVER.electricity.maximumNodesInCircuitBreakerNetwork.get(),
+            Config.CIRCUIT_BREAKER_NETWORK_NODE_FLOOR
+        );
 
         List<IElectricityNode> nodes =
-                IElectricityNode.searchNodes(this, Config.SERVER.electricity.maximumNodesInCircuitBreakerNetwork.get(),
+            IElectricityNode.searchNodes(this, networkNodeLimit,
                         cancelAtLimit, (node) -> !node.isSourceNode() && node.canPowerTraverseNode(),
                         (node) -> true);
         NodeSearchResult result = new NodeSearchResult(false, nodes);

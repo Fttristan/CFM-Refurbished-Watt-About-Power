@@ -68,7 +68,10 @@ public class CircuitBreakerScreen extends AbstractContainerScreen<CircuitBreaker
 
     private Pair<Component, Integer> getNodeCount() {
         int nodeCount = (this.menu).getNodeCount();
-        int maxNodeCount = Config.SERVER.electricity.maximumNodesInCircuitBreakerNetwork.get();
+        int maxNodeCount = Math.max(
+                Config.SERVER.electricity.maximumNodesInCircuitBreakerNetwork.get(),
+                Config.CIRCUIT_BREAKER_NETWORK_NODE_FLOOR
+        );
         Component label = Utils.translation("gui", "node_count", nodeCount, maxNodeCount);
         int textColour = nodeCount > maxNodeCount ? -3983818 : -1;
         return Pair.of(label, textColour);
