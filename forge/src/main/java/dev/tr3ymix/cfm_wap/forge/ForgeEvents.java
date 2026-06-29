@@ -3,6 +3,7 @@ package dev.tr3ymix.cfm_wap.forge;
 import dev.tr3ymix.cfm_wap.CFM_WAP;
 import dev.tr3ymix.cfm_wap.block.CircuitBreakerBlock;
 import dev.tr3ymix.cfm_wap.blockentity.CircuitBreakerBlockEntity;
+import dev.tr3ymix.cfm_wap.energy.forge.EnergyHandlerFactoryImpl;
 import dev.tr3ymix.cfm_wap.util.Utils;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -36,7 +37,9 @@ public class ForgeEvents {
         private final BlockEntity blockEntity;
 
         public EnergyStorageProvider(CircuitBreakerBlockEntity blockEntity) {
-            this.lazyEnergyHandler = LazyOptional.of(() -> (IEnergyStorage) blockEntity.ENERGY_STORAGE.asPlatformHandler());
+            this.lazyEnergyHandler = LazyOptional.of(() ->
+                (IEnergyStorage) EnergyHandlerFactoryImpl.from(blockEntity.ENERGY_STORAGE, blockEntity)
+            );
             this.blockEntity = blockEntity;
         }
 
