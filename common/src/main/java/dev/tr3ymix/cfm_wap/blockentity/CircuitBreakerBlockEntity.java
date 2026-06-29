@@ -103,20 +103,15 @@ public class CircuitBreakerBlockEntity extends ElectricitySourceLootBlockEntity 
     public void togglePower() {
         this.enabled = !this.enabled;
         if(this.enabled) {
-            NodeSearchResult result = this.searchNodeNetwork(false);
-            if(!result.overloaded()){
-                if(this.overloaded) {
-                    this.overloaded = false;
-                }
-            }else{
-                this.enabled = false;
-            }
+            this.overloaded = false;
+            this.searchNodeNetwork(false);
         }
         this.setChanged();
     }
 
     @Override
     public void onNodeOverloaded() {
+        this.overloaded = true;
         this.enabled = false;
         this.setChanged();
     }
@@ -127,9 +122,8 @@ public class CircuitBreakerBlockEntity extends ElectricitySourceLootBlockEntity 
         List<IElectricityNode> nodes =
                 IElectricityNode.searchNodes(this, Config.SERVER.electricity.maximumNodesInCircuitBreakerNetwork.get(),
                         cancelAtLimit, (node) -> !node.isSourceNode() && node.canPowerTraverseNode(),
-                        (node) -> !node.isSourceNode());
-        boolean overloaded = nodes.size() > Config.SERVER.electricity.maximumNodesInCircuitBreakerNetwork.get();
-        NodeSearchResult result = new NodeSearchResult(overloaded, nodes);
+                        (node) -> true);
+        NodeSearchResult result = new NodeSearchResult(false, nodes);
         this.nodeCount = result.nodes().size();
         return result;
     }
